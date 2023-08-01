@@ -1,0 +1,33 @@
+{% load static %}
+<div class="d-flex flex-wrap align-items-center justify-content-between">
+  <div class="d-flex align-items-center justify-content-center justify-content-lg-start">
+    <a href="{% url 'inicio' %}" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+        <img src="{% static IMAGE_PATH %}" width="60" height="60" class="d-inline-block align-top" alt="Logo">
+    </a>
+
+    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="{% url 'inicio' %}" class="nav-link px-2 link-secondary {% if pestaña_activa == 'inicio' %}active{% endif %}">Inicio</a></li>
+    {% if user.is_authenticated %}
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="expedientesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Expedientes
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="expedientesDropdown">
+            <li><a href="{% url 'consulta' %}" class="dropdown-item {% if pestaña_activa == 'consulta' %}active{% endif %}">Consultar</a></li>
+            <li><a href="{% url 'gestion' %}" class="dropdown-item {% if pestaña_activa == 'gestion' %}active{% endif %}">Gestión</a></li>
+            <li><a href="{% url 'movimiento' %}" class="dropdown-item {% if pestaña_activa == 'movimiento' %}active{% endif %}">Movimiento</a></li>
+        </ul>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="reporteDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Reporte
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="reporteDropdown">
+            <li><a href="{% url 'cargar_pdf' %}" class="dropdown-item {% if pestaña_activa == 'unirpdf' %}active{% endif %}">Crear</a></li>
+            <li><a href="{% url 'consultar_pdf' %}" class="dropdown-item {% if pestaña_activa == 'unirpdf' %}active{% endif %}">Consultar</a></li>
+        </ul>
+    </li>
+    <li><a href="{% url 'ayuda' %}" class="nav-link px-2 link-dark {% if pestaña_activa == 'ayuda' %}active{% endif %}">Ayuda</a></li>
+    {% endif %}
+</ul>
+</div>

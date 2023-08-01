@@ -1,0 +1,33 @@
+{% extends "account/base.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load account socialaccount %}
+{% load static %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+{% get_providers as socialaccount_providers %}
+{% if socialaccount_providers %}
+<h2 class="h3 mb-3 fw-normal text-center">Bienvenido</h2>
+<p class="text-center">{% blocktrans with site.name as site_name %}Por favor, inicie sesión con una de sus cuentas de terceros existentes.{% endblocktrans %}</p>
+<p class="text-center">{% blocktrans with site.name as site_name %}O, <a href="{{ signup_url }}">registrese</a> para una cuenta {{ site_name }} e inicie sesión a continuación:{% endblocktrans %}</p>
+<div class="socialaccount_ballot">
+  <ul class="socialaccount_providers">
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+  </ul>
+</div>
+{% include "socialaccount/snippets/login_extra.html" %}
+{% else %}
+<p class="text-center">{% blocktrans %}Si aún no ha creado una cuenta, por favor <a href="{{ signup_url }}">registrese</a> primero.{% endblocktrans %}</p>
+{% endif %}
+<form class="login" method="POST" action="{% url 'account_login' %}">
+  {% csrf_token %}
+  {{ form|crispy }}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <button class="btn btn-primary w-100 py-2" type="submit">{% trans "Sign In" %}</button>
+  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+</form>
+{% endblock %}

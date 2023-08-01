@@ -1,0 +1,50 @@
+<style>
+  .header-visor {
+    background-color: #f5f5f5 !important; /* Color para el grupo Visor */
+}
+
+.header-gestor {
+    background-color: #ffdddd !important; /* Color para el grupo Gestor */
+}
+
+.header-administrador {
+    background-color: #ddddff !important; /* Color para el grupo Administrador */
+}
+
+</style>
+{% load static %}
+
+{% if user.is_authenticated %}
+<header class="p-3 mb-3 border-bottom header-{{ request.nombre_grupo|lower }}">
+
+{% else %}
+<header class="p-3 mb-3 border-bottom">
+
+{% endif %}
+    <div class="container">
+            {% include 'menu.html' %}
+            <div class="dropdown text-end">
+                  {% if user.is_authenticated %}
+                  <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ request.user.username }} | {{ request.nombre_grupo|capfirst }}
+                </a>
+                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                    <li><a class="dropdown-item" href="{% url 'perfil' %}">Perfil</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Panel de control</a></li>
+                    <li><a class="dropdown-item" href="{% url 'admin:index' %} {% if pestaña_activa == 'admin' %}active{% endif %}">Panel de administración</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'account_logout' %}">Cerrar sesión</a></li>
+                  {% else %}
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Ingresar 
+                    </a>
+                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                    <li><a class="dropdown-item" href="{% url 'account_login' %}">Iniciar sesión</a></li>
+                    <li><a class="dropdown-item" href="{% url 'account_signup' %}">Registrarse</a></li>
+                  {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>

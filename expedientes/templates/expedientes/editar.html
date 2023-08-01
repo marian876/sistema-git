@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Editar Expedientes {% endblock titulo %}
+
+{% block contenido %} 
+    <div class="card">
+    <div class="card-header">
+        Editar información del expediente
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Datos del expediente</h4>
+        {% include 'expedientes/form.html' %}
+    </div>
+    <div class="card-footer text-muted">
+    </div>
+</div>{% endblock contenido %} 
+    

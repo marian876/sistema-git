@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Verificar PDF {% endblock titulo %}
+
+{% block contenido %} 
+    <div class="card">
+        <div class="card-header">
+            Verificar el reporte original
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">Datos del reporte</h4>
+            <iframe src="{{ pdf_url }}" width="600" height="500"></iframe>
+        </div>
+        <div class="card-footer text-muted">
+            <form method="POST" action="{% url 'verificar_pdf' %}">
+                {% csrf_token %}
+                <input type="hidden" name="sucursal" value="{{ sucursal }}">
+                <input type="hidden" name="periodo" value="{{ periodo }}">
+                <input type="submit" class="btn btn-primary" value="Confirmar y Descargar">
+            </form>
+            <a href="{% url 'cancelar_pdf' pdf_name %}">
+                <button type="button" class="btn btn-danger">Cancelar</button>
+            </a>
+        </div>
+    </div>
+{% endblock contenido %}
